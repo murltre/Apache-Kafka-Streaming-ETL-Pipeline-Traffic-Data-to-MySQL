@@ -1,6 +1,5 @@
-# Kafka Streaming ETL Pipeline: Toll Traffic to MySQL
+# Apache Kafka Streaming ETL Pipeline: Toll Traffic to MySQL
 
-## Overview
 
 This project demonstrates a real-time streaming data pipeline. A Python producer generates simulated toll traffic events and publishes them to Apache Kafka. A Python consumer reads the events, validates and converts their fields, then inserts them into a MySQL table.
 
@@ -69,7 +68,7 @@ Each JSON message contains these keys:
 
 ```json
 {
-  "timestamp": "2026-10-23 12:30:00",
+  "timestamp": "2025-10-23 12:30:00",
   "vehicle_id": 1234567,
   "vehicle_type": "car",
   "toll_plaza_id": 4001
@@ -87,8 +86,6 @@ The destination table is `tolldata.livetolldata` with these columns:
 
 ## Setup and reproduction
 
-These instructions assume Ubuntu/WSL and the existing workspace `~/IBMDEexercises/AirflowKafka`. Commands include inline comments to explain their purpose.
-
 ### 1. Prepare the Python environment
 
 ```bash
@@ -97,8 +94,6 @@ source .venv/bin/activate  # Activate its Python virtual environment
 uv pip install --python .venv/bin/python kafka-python mysql-connector-python  # Install Kafka and MySQL drivers
 python -m py_compile toll_traffic_generator.py streaming-data-reader.py  # Check both scripts for syntax errors
 ```
-
-No output from `py_compile` indicates the syntax check passed.
 
 ### 2. Install and initialize Kafka (one-time setup)
 
@@ -126,7 +121,6 @@ In a dedicated terminal, start the Kafka broker and leave that terminal open:
 cd ~/IBMDEexercises/AirflowKafka/kafka_2.12-3.7.0  # Enter the Kafka directory
 bin/kafka-server-start.sh config/kraft/server.properties  # Start the Kafka broker
 ```
-
 ### 4. Create the Kafka topic
 
 In a second terminal, create the `toll` topic once. If it already exists, skip the create command.
@@ -283,7 +277,3 @@ Both scripts must use the same topic. The JSON message structure must also conti
 - **Parameterized SQL:** passes record values separately from SQL text when inserting rows.
 - **Environment variables:** allow brokers, topics, database settings, and secrets to be configured outside source code.
 - **Streaming pipeline:** the producer, Kafka broker, consumer, and database each have a distinct responsibility and can be monitored separately.
-
-## GitHub notes
-
-Do not commit database passwords, local virtual environments, Kafka log/storage directories, large archives, or generated data. Keep only the reusable source code and documentation in the repository. Use `.gitignore` rules appropriate to your local setup.
