@@ -1,5 +1,4 @@
-# Apache Kafka Streaming ETL Pipeline: Toll Traffic to MySQL
-
+# Apache Kafka Streaming ETL Pipeline: Traffic Data to MySQL
 
 This project demonstrates a real-time streaming data pipeline. A Python producer generates simulated toll traffic events and publishes them to Apache Kafka. A Python consumer reads the events, validates and converts their fields, then inserts them into a MySQL table.
 
